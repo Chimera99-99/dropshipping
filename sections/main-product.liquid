@@ -1,0 +1,244 @@
+{%- comment -%}
+  Product page. Port of ProductView.js: gallery with thumbs, colour swatches,
+  size buttons, quantity stepper and the reassurance panel.
+
+  Colour options render as swatches, size options as labelled buttons; anything
+  else falls back to plain buttons. Availability is greyed out live in theme.js.
+{%- endcomment -%}
+
+{%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if variant.compare_at_price > variant.price
+    assign on_sale = true
+  endif
+-%}
+
+<section class="section-sm" data-product-form>
+  <div class="container-x product">
+    {%- comment -%} ---------------------------------------------- gallery {%- endcomment -%}
+    <div data-gallery>
+      <div class="gallery__main" data-gallery-main>
+        {%- if product.featured_media -%}
+          {%- assign lead = variant.featured_media | default: product.featured_media -%}
+          <img
+            src="{{ lead | image_url: width: 1200 }}"
+            srcset="{{ lead | image_url: width: 700 }} 700w, {{ lead | image_url: width: 1200 }} 1200w"
+            sizes="(min-width: 1024px) 620px, 92vw"
+            alt="{{ lead.alt | escape }}"
+            width="1200"
+            height="1200"
+            fetchpriority="high"
+          >
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+        {%- endif -%}
+      </div>
+
+      {%- if product.media.size > 1 -%}
+        <div class="gallery__thumbs no-scrollbar">
+          {%- for media in product.media -%}
+            <button
+              type="button"
+              class="gallery__thumb"
+              data-gallery-thumb
+              data-media-id="{{ media.id }}"
+              data-media-src="{{ media | image_url: width: 1200 }}"
+              aria-current="{% if media.id == lead.id %}true{% else %}false{% endif %}"
+              aria-label="{{ 'products.product.view_image' | t: index: forloop.index }}"
+            >
+              <img
+                src="{{ media | image_url: width: 160 }}"
+                alt="{{ media.alt | escape }}"
+                width="78"
+                height="78"
+                loading="lazy"
+              >
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} ------------------------------------------------- info {%- endcomment -%}
+    <div>
+      <nav class="breadcrumb" aria-label="{{ 'general.breadcrumb' | t }}">
+        <a href="{{ routes.root_url }}">{{ 'general.home' | t }}</a>
+        {%- if collection -%}
+          / <a href="{{ collection.url }}">{{ collection.title }}</a>
+        {%- endif -%}
+        / {{ product.title }}
+      </nav>
+
+      <h1 class="product__title">{{ product.title }}</h1>
+
+      {%- if settings.show_rating -%}
+        <div class="product__rating">
+          {% render 'rating', product: product, size: 17 %}
+        </div>
+      {%- endif -%}
+
+      <div class="product__price">
+        <span class="price" data-price>{{ variant.price | money }}</span>
+        <span class="price--was" data-price-was {% unless on_sale %}hidden{% endunless %}>
+          {%- if on_sale %}{{ variant.compare_at_price | money }}{% endif -%}
+        </span>
+        <span
+          class="price--badge"
+          data-price-save
+          data-save-label="{{ 'products.product.save' | t }}"
+          {% unless on_sale %}hidden{% endunless %}
+        >
+          {%- if on_sale -%}
+            {{ 'products.product.save' | t }} {{ variant.compare_at_price | minus: variant.price | money }}
+          {%- endif -%}
+        </span>
+      </div>
+
+      {%- if product.description != blank -%}
+        <div class="product__desc rte">{{ product.description }}</div>
+      {%- endif -%}
+
+      {%- form 'product', product, id: 'product-form' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}" data-variant-id>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            {%- liquid
+              assign opt_name = option.name | downcase
+              assign is_color = false
+              if opt_name contains 'color' or opt_name contains 'colour'
+                assign is_color = true
+              endif
+            -%}
+            <div class="option" data-option-index="{{ forloop.index0 }}">
+              <div class="option__label">
+                {{ option.name }}:
+                <span data-option-selected>{{ option.selected_value }}</span>
+              </div>
+              <div class="option__values">
+                {%- for value in option.values -%}
+                  {%- assign is_active = false -%}
+                  {%- if value == option.selected_value -%}{%- assign is_active = true -%}{%- endif -%}
+
+                  {%- if is_color -%}
+                    <button
+                      type="button"
+                      class="swatch {% if is_active %}is-active{% endif %}"
+                      data-option-value="{{ value | escape }}"
+                      aria-pressed="{{ is_active }}"
+                      title="{{ value | escape }}"
+                      style="background: {% if value.swatch.color %}{{ value.swatch.color }}{% else %}{{ value | downcase | replace: ' ', '' }}{% endif %};"
+                    >
+                      <span class="visually-hidden">{{ value }}</span>
+                    </button>
+                  {%- else -%}
+                    <button
+                      type="button"
+                      class="size-btn {% if is_active %}is-active{% endif %}"
+                      data-option-value="{{ value | escape }}"
+                      aria-pressed="{{ is_active }}"
+                    >
+                      {{ value }}
+                    </button>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="product__buy">
+          <div class="qty" data-qty>
+            <button type="button" data-qty-change="-1" aria-label="{{ 'products.product.decrease' | t }}">
+              {% render 'icon', name: 'minus', size: 18 %}
+            </button>
+            <label class="visually-hidden" for="product-qty">{{ 'products.product.quantity' | t }}</label>
+            <input id="product-qty" type="number" name="quantity" value="1" min="1" inputmode="numeric">
+            <button type="button" data-qty-change="1" aria-label="{{ 'products.product.increase' | t }}">
+              {% render 'icon', name: 'plus', size: 18 %}
+            </button>
+          </div>
+
+          <button
+            type="submit"
+            class="btn btn-primary btn-lg"
+            data-add-to-cart
+            data-text-add="{{ section.settings.add_label | escape }}"
+            data-text-adding="{{ 'products.product.adding' | t }}"
+            data-text-soldout="{{ 'products.product.sold_out' | t }}"
+            data-text-unavailable="{{ 'products.product.unavailable' | t }}"
+            {% unless variant.available %}disabled{% endunless %}
+          >
+            {%- if variant.available -%}
+              {{ section.settings.add_label }}
+            {%- else -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- endif -%}
+          </button>
+        </div>
+
+        {%- if section.settings.show_dynamic_checkout -%}
+          {{ form | payment_button }}
+        {%- endif -%}
+
+        <script type="application/json" data-product-json>
+          {{ product | json }}
+        </script>
+      {%- endform -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="reassure">
+          {%- for block in section.blocks -%}
+            <div {{ block.shopify_attributes }}>
+              {% render 'icon', name: block.settings.icon, size: 18, class: 'is-sage' %}
+              {{ block.settings.text }}
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product",
+  "settings": [
+    { "type": "text", "id": "add_label", "label": "Add to cart label", "default": "Add to Cart — BOGO Free 🐾" },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "reassurance",
+      "name": "Reassurance line",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free EU shipping over €49 · dispatched in 24h" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Truck" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "refresh-cw", "label": "Returns" },
+            { "value": "shield-check", "label": "Shield" },
+            { "value": "credit-card", "label": "Card" },
+            { "value": "leaf", "label": "Leaf" }
+          ]
+        }
+      ]
+    }
+  ],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "reassurance", "settings": { "icon": "truck", "text": "Free EU shipping over €49 · dispatched in 24h" } },
+      { "type": "reassurance", "settings": { "icon": "moon", "text": "60-night comfort guarantee — love it or return it" } },
+      { "type": "reassurance", "settings": { "icon": "lock", "text": "Secure checkout · Klarna & PayPal available" } }
+    ]
+  }
+}
+{% endschema %}

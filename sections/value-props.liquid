@@ -1,0 +1,58 @@
+<section class="section">
+  <div class="container-x grid-4">
+    {%- for block in section.blocks -%}
+      <div class="reveal" style="--reveal-delay: {{ forloop.index0 | times: 80 }}ms" {{ block.shopify_attributes }}>
+        <div class="value">
+          <div class="value__icon">
+            {% render 'icon', name: block.settings.icon, size: 26 %}
+          </div>
+          <b>{{ block.settings.title }}</b>
+          <span>{{ block.settings.text }}</span>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Value props",
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "500k+ happy pets" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Chilling out in 30+ countries" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "paw-print",
+          "options": [
+            { "value": "paw-print", "label": "Paw" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "snowflake", "label": "Snowflake" },
+            { "value": "shield-check", "label": "Shield" },
+            { "value": "refresh-cw", "label": "Returns" },
+            { "value": "lock", "label": "Secure" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "leaf", "label": "Leaf" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Value props" }],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "value", "settings": { "icon": "paw-print", "title": "500k+ happy pets", "text": "Chilling out in 30+ countries" } },
+      { "type": "value", "settings": { "icon": "moon", "title": "60-night guarantee", "text": "Love it or your money back" } },
+      { "type": "value", "settings": { "icon": "truck", "title": "Free EU shipping", "text": "On every order over €49" } },
+      { "type": "value", "settings": { "icon": "snowflake", "title": "1M+ mats sold", "text": "The original ice-silk cool mat" } }
+    ]
+  }
+}
+{% endschema %}

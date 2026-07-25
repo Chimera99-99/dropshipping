@@ -1,0 +1,58 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ 'customer.account.title' | t }}</h1>
+    <p class="muted">{{ customer.name | default: customer.email }}</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x cart">
+    <div>
+      <h2 class="h2" style="font-size: 1.3rem; margin-bottom: 16px;">
+        {{ 'customer.orders.title' | t }}
+      </h2>
+
+      {%- if customer.orders.size > 0 -%}
+        <div class="table-wrap">
+          <table class="size-table">
+            <thead>
+              <tr>
+                <th>{{ 'customer.orders.order_number' | t }}</th>
+                <th>{{ 'customer.orders.date' | t }}</th>
+                <th>{{ 'customer.orders.payment_status' | t }}</th>
+                <th>{{ 'customer.orders.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr>
+                  <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: format: 'date' }}</td>
+                  <td class="muted-cell">{{ order.financial_status_label }}</td>
+                  <td>{{ order.total_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+        </div>
+      {%- else -%}
+        <p class="muted">{{ 'customer.orders.none' | t }}</p>
+      {%- endif -%}
+    </div>
+
+    <aside class="cart__summary">
+      <h2 class="h2" style="font-size: 1.1rem; margin-bottom: 12px;">
+        {{ 'customer.account.default_address' | t }}
+      </h2>
+      {%- if customer.default_address -%}
+        <div class="muted" style="font-size: 0.92rem;">{{ customer.default_address | format_address }}</div>
+      {%- endif -%}
+      <a href="{{ routes.account_addresses_url }}" class="btn btn-ghost btn-full" style="margin-top: 16px;">
+        {{ 'customer.account.view_addresses' | t }}
+      </a>
+      <a href="{{ routes.account_logout_url }}" class="btn btn-primary btn-full" style="margin-top: 10px;">
+        {{ 'customer.account.log_out' | t }}
+      </a>
+    </aside>
+  </div>
+</section>

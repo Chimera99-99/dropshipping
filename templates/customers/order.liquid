@@ -1,0 +1,77 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ 'customer.order.title' | t: name: order.name }}</h1>
+    <p class="muted">{{ order.created_at | date: format: 'date_at_time' }}</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x">
+    <div class="table-wrap">
+      <table class="size-table">
+        <thead>
+          <tr>
+            <th>{{ 'customer.order.product' | t }}</th>
+            <th>{{ 'customer.order.price' | t }}</th>
+            <th>{{ 'customer.order.quantity' | t }}</th>
+            <th>{{ 'customer.order.total' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr>
+              <td>
+                <a href="{{ line_item.product.url }}">{{ line_item.title }}</a>
+              </td>
+              <td>{{ line_item.price | money }}</td>
+              <td class="muted-cell">{{ line_item.quantity }}</td>
+              <td>{{ line_item.line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cart__summary" style="max-width: 380px; margin-left: auto; margin-top: 24px; position: static;">
+      <div class="cart__row">
+        <span>{{ 'sections.cart.subtotal' | t }}</span>
+        <span>{{ order.subtotal_price | money }}</span>
+      </div>
+      {%- for shipping_method in order.shipping_methods -%}
+        <div class="cart__row">
+          <span>{{ shipping_method.title }}</span>
+          <span>{{ shipping_method.price | money }}</span>
+        </div>
+      {%- endfor -%}
+      {%- for tax_line in order.tax_lines -%}
+        <div class="cart__row">
+          <span>{{ tax_line.title }}</span>
+          <span>{{ tax_line.price | money }}</span>
+        </div>
+      {%- endfor -%}
+      <div class="cart__row cart__row--total">
+        <span>{{ 'sections.cart.total' | t }}</span>
+        <span>{{ order.total_price | money }}</span>
+      </div>
+    </div>
+
+    <div class="grid-2-split" style="margin-top: 40px;">
+      <div>
+        <h2 class="h2" style="font-size: 1.1rem; margin-bottom: 10px;">
+          {{ 'customer.order.billing_address' | t }}
+        </h2>
+        <div class="muted" style="font-size: 0.92rem;">{{ order.billing_address | format_address }}</div>
+      </div>
+      <div>
+        <h2 class="h2" style="font-size: 1.1rem; margin-bottom: 10px;">
+          {{ 'customer.order.shipping_address' | t }}
+        </h2>
+        <div class="muted" style="font-size: 0.92rem;">{{ order.shipping_address | format_address }}</div>
+      </div>
+    </div>
+
+    <a href="{{ routes.account_url }}" class="btn btn-ghost" style="margin-top: 32px;">
+      {{ 'customer.order.back' | t }}
+    </a>
+  </div>
+</section>

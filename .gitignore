@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+*.log
+
+# Shopify CLI
+.shopify/
+.env
+
+# Local session artefacts, not part of the theme
+*.txt
+.conductor/
+.claude/

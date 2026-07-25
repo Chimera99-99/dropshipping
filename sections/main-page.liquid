@@ -1,0 +1,18 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ page.title }}</h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x" style="max-width: 780px;">
+    <div class="rte reveal">{{ page.content }}</div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page",
+  "settings": []
+}
+{% endschema %}

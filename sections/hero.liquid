@@ -1,0 +1,195 @@
+{%- comment -%}
+  Full-bleed hero. The cream scrim keeps the copy legible while the pets fade
+  in on the right, exactly as in the original Hero.js.
+{%- endcomment -%}
+
+<section class="hero">
+  <div class="hero__bg">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 2400 }}"
+        srcset="
+          {{ section.settings.image | image_url: width: 900 }} 900w,
+          {{ section.settings.image | image_url: width: 1400 }} 1400w,
+          {{ section.settings.image | image_url: width: 2000 }} 2000w,
+          {{ section.settings.image | image_url: width: 2400 }} 2400w
+        "
+        sizes="100vw"
+        alt="{{ section.settings.image.alt | escape }}"
+        width="{{ section.settings.image.width }}"
+        height="{{ section.settings.image.height }}"
+        fetchpriority="high"
+      >
+    {%- else -%}
+      <img
+        src="{{ 'hero.png' | asset_url }}"
+        alt="{{ section.settings.image_alt | escape }}"
+        width="1600"
+        height="1000"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+
+    <div class="hero__scrim"></div>
+    <div class="hero__veil"></div>
+    <div class="hero__wash"></div>
+  </div>
+
+  <div class="container-x hero__inner">
+    <div class="hero__content">
+      <div class="hero__copy">
+        {%- if section.settings.pill != blank -%}
+          <span class="hero__pill reveal">
+            {% render 'icon', name: section.settings.pill_icon, size: 14 %}
+            {{ section.settings.pill }}
+          </span>
+        {%- endif -%}
+
+        <h1 class="h1 hero__title reveal" style="--reveal-delay: 0.1s">
+          {{ section.settings.heading }}
+        </h1>
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="hero__sub reveal" style="--reveal-delay: 0.2s">
+            {{ section.settings.subheading }}
+          </p>
+        {%- endif -%}
+
+        <div class="hero__cta reveal" style="--reveal-delay: 0.3s">
+          {%- if section.settings.cta_text != blank -%}
+            <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-lg">
+              {{ section.settings.cta_text }}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.cta2_text != blank -%}
+            <a href="{{ section.settings.cta2_link }}" class="btn btn-ghost btn-lg">
+              {{ section.settings.cta2_text }}
+            </a>
+          {%- endif -%}
+        </div>
+
+        {%- if section.blocks.size > 0 -%}
+          <div class="hero__proof reveal" style="--reveal-delay: 0.4s">
+            {%- for block in section.blocks -%}
+              <span {{ block.shopify_attributes }}>
+                {% render 'icon', name: block.settings.icon, size: 16, class: block.settings.icon_color, fill: block.settings.icon_fill %}
+                <b>{{ block.settings.strong }}</b> {{ block.settings.text }}
+              </span>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+
+  {%- if section.settings.chip1 != blank -%}
+    <div class="hero__chip hero__chip--1 float">
+      {% render 'icon', name: 'snowflake', size: 20, class: 'is-cool' %}
+      {{ section.settings.chip1 }}
+    </div>
+  {%- endif -%}
+  {%- if section.settings.chip2 != blank -%}
+    <div class="hero__chip hero__chip--2 float">
+      {% render 'icon', name: 'dog', size: 20 %}
+      {{ section.settings.chip2 }}
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "text", "id": "image_alt", "label": "Fallback image alt text", "default": "A husky and a cat relaxing on a Frischtier cooling mat" },
+    { "type": "text", "id": "pill", "label": "Pill text", "default": "New — Summer Cooling Collection" },
+    {
+      "type": "select",
+      "id": "pill_icon",
+      "label": "Pill icon",
+      "default": "snowflake",
+      "options": [
+        { "value": "snowflake", "label": "Snowflake" },
+        { "value": "sparkles", "label": "Sparkles" },
+        { "value": "flame", "label": "Flame" },
+        { "value": "leaf", "label": "Leaf" },
+        { "value": "paw-print", "label": "Paw" }
+      ]
+    },
+    {
+      "type": "html",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Keep them <span class=\"cool\">cool.</span><br>Keep them <span class=\"sage\">comfy.</span>",
+      "info": "Wrap words in <span class=\"cool\"> or <span class=\"sage\"> to colour them."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Meet the Frischtier™ Self-Cooling Mat — pressure-activated ice-silk that stays fresh for hours. No water, no gel, no fridge. Just happy, chilled-out pets."
+    },
+    { "type": "text", "id": "cta_text", "label": "Primary button", "default": "Shop the Cooling Mat" },
+    { "type": "url", "id": "cta_link", "label": "Primary button link" },
+    { "type": "text", "id": "cta2_text", "label": "Secondary button", "default": "How it works" },
+    { "type": "url", "id": "cta2_link", "label": "Secondary button link" },
+    { "type": "text", "id": "chip1", "label": "Floating chip 1", "default": "Instantly cool to the touch" },
+    { "type": "text", "id": "chip2", "label": "Floating chip 2", "default": "Loved by 500k+ pets" }
+  ],
+  "blocks": [
+    {
+      "type": "proof",
+      "name": "Proof point",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "strong", "label": "Bold text", "default": "4.8/5" },
+        { "type": "text", "id": "text", "label": "Rest of line", "default": "· 12,400+ reviews" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "star",
+          "options": [
+            { "value": "star", "label": "Star" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "snowflake", "label": "Snowflake" },
+            { "value": "shield-check", "label": "Shield" },
+            { "value": "paw-print", "label": "Paw" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "icon_color",
+          "label": "Icon colour",
+          "default": "is-gold",
+          "options": [
+            { "value": "is-gold", "label": "Gold" },
+            { "value": "is-sage", "label": "Sage" },
+            { "value": "is-cool", "label": "Cool blue" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "icon_fill",
+          "label": "Icon fill",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "Outline" },
+            { "value": "currentColor", "label": "Solid" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hero" }],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "proof", "settings": { "icon": "star", "icon_color": "is-gold", "icon_fill": "currentColor", "strong": "4.8/5", "text": "· 12,400+ reviews" } },
+      { "type": "proof", "settings": { "icon": "truck", "icon_color": "is-sage", "strong": "Free", "text": "EU shipping €49+" } },
+      { "type": "proof", "settings": { "icon": "moon", "icon_color": "is-cool", "strong": "60-night", "text": "guarantee" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,43 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ 'collections.list.title' | t }}</h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x">
+    <div class="grid-tiles">
+      {%- for collection in collections -%}
+        <div class="reveal" style="--reveal-delay: {{ forloop.index0 | modulo: 4 | times: 80 }}ms">
+          <a href="{{ collection.url }}" class="tile">
+            {%- if collection.featured_image -%}
+              <img
+                src="{{ collection.featured_image | image_url: width: 800 }}"
+                alt="{{ collection.title | escape }}"
+                width="600"
+                height="800"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder' }}
+            {%- endif -%}
+            <div class="tile__overlay">
+              <h3>{{ collection.title }}</h3>
+              <span class="tile__cta">
+                {{ 'sections.shop_by_category.shop_now' | t }}
+                {% render 'icon', name: 'arrow-right', size: 15 %}
+              </span>
+            </div>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Collections list",
+  "settings": []
+}
+{% endschema %}

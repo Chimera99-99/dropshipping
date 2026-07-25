@@ -1,0 +1,57 @@
+<div class="trust" style="background: {{ section.settings.bg }}; color: {{ section.settings.fg }};">
+  <div class="container-x trust__row">
+    {%- for block in section.blocks -%}
+      <div class="trust__item" {{ block.shopify_attributes }}>
+        {% render 'icon', name: block.settings.icon, size: 18 %}
+        {{ block.settings.text }}
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust strip",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#57724A" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#F8F3E9" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Machine washable" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "snowflake",
+          "options": [
+            { "value": "snowflake", "label": "Snowflake" },
+            { "value": "droplets", "label": "Droplets" },
+            { "value": "washing-machine", "label": "Washing machine" },
+            { "value": "sofa", "label": "Sofa" },
+            { "value": "palette", "label": "Palette" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "shield-check", "label": "Shield" },
+            { "value": "wind", "label": "Wind" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Trust strip" }],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "item", "settings": { "icon": "snowflake", "text": "Self-cooling ice-silk" } },
+      { "type": "item", "settings": { "icon": "droplets", "text": "No water or gel needed" } },
+      { "type": "item", "settings": { "icon": "washing-machine", "text": "Machine washable" } },
+      { "type": "item", "settings": { "icon": "sofa", "text": "Sofa · Floor · Crate · Car" } },
+      { "type": "item", "settings": { "icon": "palette", "text": "5 sizes · 6 colours" } }
+    ]
+  }
+}
+{% endschema %}

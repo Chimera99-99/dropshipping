@@ -1,0 +1,132 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Frischtier",
+    "theme_version": "1.0.0",
+    "theme_author": "Frischtier",
+    "theme_documentation_url": "https://shopify.dev/docs/themes",
+    "theme_support_url": "https://shopify.dev/docs/themes"
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "type_header_font",
+        "label": "Heading font",
+        "default": "montserrat_n7",
+        "info": "Frischtier's brand typeface is Montserrat."
+      },
+      {
+        "type": "font_picker",
+        "id": "type_body_font",
+        "label": "Body font",
+        "default": "montserrat_n4"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Primary (sage)",
+        "default": "#6E8A5C"
+      },
+      {
+        "type": "color",
+        "id": "color_cool",
+        "label": "Secondary (cool blue)",
+        "default": "#3E9FC9"
+      }
+    ]
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo",
+        "info": "Leave empty to use the Frischtier wordmark with the paw badge."
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      },
+      {
+        "type": "image_picker",
+        "id": "share_image",
+        "label": "Social sharing image"
+      }
+    ]
+  },
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_vendor",
+        "label": "Show product vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rating",
+        "label": "Show star rating",
+        "default": true,
+        "info": "Uses the product's reviews metafield if a reviews app is installed, otherwise shows the fallback rating below."
+      },
+      {
+        "type": "range",
+        "id": "fallback_rating",
+        "label": "Fallback rating",
+        "min": 0,
+        "max": 5,
+        "step": 1,
+        "default": 5
+      },
+      {
+        "type": "text",
+        "id": "fallback_reviews",
+        "label": "Fallback review count",
+        "default": "12.4k"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_swatches",
+        "label": "Show colour swatches",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_quick_add",
+        "label": "Show Add to Cart button",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram_link", "label": "Instagram" },
+      { "type": "text", "id": "social_tiktok_link", "label": "TikTok" },
+      { "type": "text", "id": "social_facebook_link", "label": "Facebook" },
+      { "type": "text", "id": "social_youtube_link", "label": "YouTube" }
+    ]
+  },
+  {
+    "name": "Currency",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "show_currency_selector",
+        "label": "Show currency selector in header",
+        "default": true,
+        "info": "Only appears when more than one currency is enabled in Markets."
+      }
+    ]
+  }
+]

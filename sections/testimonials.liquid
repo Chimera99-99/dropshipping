@@ -1,0 +1,84 @@
+<section class="section section-sage">
+  <div class="container-x">
+    <div class="section-head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="muted">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="grid-4">
+      {%- for block in section.blocks -%}
+        <div class="reveal" style="--reveal-delay: {{ forloop.index0 | times: 80 }}ms" {{ block.shopify_attributes }}>
+          <div class="review">
+            <div class="stars__row">
+              {%- for i in (1..5) -%}
+                {% render 'icon', name: 'star', size: 16, fill: 'currentColor' %}
+              {%- endfor -%}
+            </div>
+            <p class="review__text">{{ block.settings.text }}</p>
+            <div class="review__author">
+              {%- if block.settings.avatar != blank -%}
+                <img
+                  class="review__avatar"
+                  src="{{ block.settings.avatar | image_url: width: 72 }}"
+                  alt="{{ block.settings.name | escape }}"
+                  width="36"
+                  height="36"
+                  loading="lazy"
+                >
+              {%- else -%}
+                <span class="review__avatar">{{ block.settings.name | slice: 0 | upcase }}</span>
+              {%- endif -%}
+              <div>
+                <b class="review__name">{{ block.settings.name }}</b>
+                {%- if block.settings.verified -%}
+                  <small class="review__verified">
+                    {% render 'icon', name: 'badge-check', size: 13 %}
+                    {{ 'sections.testimonials.verified' | t }}
+                  </small>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Loved by pet parents" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "10,000+ five-star tail wags" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Review", "default": "My husky used to pant all night in summer. First evening on the Frischtier mat he flopped straight down and slept through. Genuinely magic." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Lena M." },
+        { "type": "image_picker", "id": "avatar", "label": "Avatar", "info": "Falls back to the first letter of the name." },
+        { "type": "checkbox", "id": "verified", "label": "Show 'Verified Buyer'", "default": true }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Testimonials" }],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "review", "settings": { "name": "Lena M.", "text": "My husky used to pant all night in summer. First evening on the Frischtier mat he flopped straight down and slept through. Genuinely magic." } },
+      { "type": "review", "settings": { "name": "Jonas R.", "text": "Two cats, zero fighting — they each claimed a corner. Washes brilliantly and still cold after weeks of use." } },
+      { "type": "review", "settings": { "name": "Priya K.", "text": "Bought the XL for the back seat on road trips. My lab finally settles instead of pacing. Worth every cent." } },
+      { "type": "review", "settings": { "name": "Marco T.", "text": "Looks lovely in the living room too — the sage colour matches everything. Doesn't look like a 'pet product' at all." } }
+    ]
+  }
+}
+{% endschema %}

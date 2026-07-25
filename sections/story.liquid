@@ -1,0 +1,36 @@
+<section class="section story" id="{{ section.settings.anchor | default: 'story' }}">
+  <div class="container-x story__inner reveal">
+    {%- if section.settings.eyebrow != blank -%}
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    {%- endif -%}
+    <h2 class="h2-lg" style="margin: 8px 0 20px;">{{ section.settings.heading }}</h2>
+
+    <div class="rte">{{ section.settings.text }}</div>
+
+    {%- if section.settings.cta_text != blank -%}
+      <a href="{{ section.settings.cta_link }}" class="btn btn-primary btn-lg" style="margin-top: 12px;">
+        {{ section.settings.cta_text }}
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Story",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Welcome to Frischtier™" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Comfort, designed with love" },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Frischtier — &ldquo;fresh companion&rdquo; — began with a simple belief: our pets deserve the same thoughtful design we give ourselves. Every product is chosen to make their day cooler, calmer and cosier.</p><p>We obsess over the details so your best friend doesn&rsquo;t have to. That&rsquo;s the Frischtier™ promise.</p>"
+    },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Explore the collection" },
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "story" }
+  ],
+  "presets": [{ "name": "Story" }]
+}
+{% endschema %}

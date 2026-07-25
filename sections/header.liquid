@@ -1,0 +1,140 @@
+{%- comment -%}
+  Sticky header with a hover mega-menu built from the linklist chosen in the
+  theme editor. Second-level links render as the mega panel; the original
+  design's two-column layout is preserved.
+{%- endcomment -%}
+
+<header class="header">
+  <div class="container-x header__bar">
+    <button
+      class="header__burger"
+      type="button"
+      data-menu-toggle
+      aria-controls="mobile-nav"
+      aria-expanded="false"
+      aria-label="{{ 'general.menu' | t }}"
+    >
+      {% render 'icon', name: 'menu', size: 22 %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="logo">
+      {%- if settings.logo != blank -%}
+        <img
+          class="logo__img"
+          src="{{ settings.logo | image_url: width: 400 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ settings.logo.width }}"
+          height="{{ settings.logo.height }}"
+        >
+      {%- else -%}
+        <span class="logo__mark">{% render 'icon', name: 'paw-print', size: 18 %}</span>
+        {{ shop.name }}<span class="tm">™</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="nav" role="navigation" aria-label="{{ 'general.primary_nav' | t }}">
+      <ul class="nav__list">
+        {%- for link in section.settings.menu.links -%}
+          <li class="nav__item">
+            <a href="{{ link.url }}" class="nav__link">
+              {{ link.title }}
+              {%- if link.title contains 'Bundle' or link.title contains 'Sale' -%}
+                <span class="nav__badge">{{ 'general.save' | t }}</span>
+              {%- endif -%}
+              {%- if link.links.size > 0 -%}
+                {% render 'icon', name: 'chevron-down', size: 13, class: 'nav__caret' %}
+              {%- endif -%}
+            </a>
+
+            {%- if link.links.size > 0 -%}
+              <div class="mega">
+                <span class="mega__title">{{ link.title }}</span>
+                {%- for child in link.links -%}
+                  <a href="{{ child.url }}" class="mega__link">{{ child.title }}</a>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <a href="{{ routes.search_url }}" class="icon-btn" aria-label="{{ 'general.search.title' | t }}">
+        {% render 'icon', name: 'search', size: 19 %}
+      </a>
+
+      {%- if shop.customer_accounts_enabled -%}
+        <a
+          href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}"
+          class="icon-btn"
+          aria-label="{{ 'customer.account.title' | t }}"
+        >
+          {% render 'icon', name: 'user', size: 19 %}
+        </a>
+      {%- endif -%}
+
+      <a href="{{ routes.cart_url }}" class="icon-btn" aria-label="{{ 'sections.cart.title' | t }}">
+        {% render 'icon', name: 'shopping-bag', size: 19 %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>
+          {{- cart.item_count -}}
+        </span>
+      </a>
+
+      {%- if settings.show_currency_selector and localization.available_countries.size > 1 -%}
+        <form method="post" action="{{ routes.root_url }}localization" id="header-locale">
+          <input type="hidden" name="form_type" value="localization">
+          <input type="hidden" name="_method" value="put">
+          <input type="hidden" name="return_to" value="{{ request.path }}">
+          <select
+            name="country_code"
+            class="header__locale"
+            aria-label="{{ 'general.currency' | t }}"
+            onchange="this.form.submit()"
+          >
+            {%- for country in localization.available_countries -%}
+              <option
+                value="{{ country.iso_code }}"
+                {% if country.iso_code == localization.country.iso_code %}selected{% endif %}
+              >
+                {{ country.name }} {{ country.currency.iso_code }} {{ country.currency.symbol }}
+              </option>
+            {%- endfor -%}
+          </select>
+        </form>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <nav class="mobile-nav" id="mobile-nav" aria-label="{{ 'general.mobile_nav' | t }}">
+    <ul class="mobile-nav__list">
+      {%- for link in section.settings.menu.links -%}
+        <li>
+          <a href="{{ link.url }}" class="mobile-nav__link">{{ link.title }}</a>
+          {%- if link.links.size > 0 -%}
+            <div class="mobile-nav__sub">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}">{{ child.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  </nav>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "info": "Second-level links appear in a hover mega-menu."
+    }
+  ]
+}
+{% endschema %}
