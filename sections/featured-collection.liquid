@@ -1,0 +1,89 @@
+{%- comment -%}
+  Product grid pulled from a collection. Used for "Best-selling comfort" on the
+  homepage and "Pairs perfectly with" on the product page.
+{%- endcomment -%}
+
+<section class="section" id="{{ section.settings.anchor | default: 'shop' }}">
+  <div class="container-x">
+    {%- if section.settings.heading != blank or section.settings.eyebrow != blank -%}
+      <div class="section-head reveal">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+        {%- if section.settings.heading != blank -%}
+          <h2 class="h2">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="muted">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- liquid
+      assign source = section.settings.collection.products
+      assign count = section.settings.products_to_show
+    -%}
+
+    {%- if source.size > 0 -%}
+      <div class="grid-4">
+        {%- for product in source limit: count -%}
+          <div class="reveal" style="--reveal-delay: {{ forloop.index0 | times: 80 }}ms">
+            {% render 'product-card', product: product %}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="grid-4">
+        {%- for i in (1..4) -%}
+          <div class="card">
+            <div class="card__media">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+            </div>
+            <div class="card__body">
+              <h3 class="card__title">{{ 'onboarding.product_title' | t }}</h3>
+              <div class="card__price"><span class="price">{{ 1995 | money }}</span></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.show_view_all and section.settings.collection != blank -%}
+      <div style="text-align:center; margin-top: 40px;">
+        <a href="{{ section.settings.collection.url }}" class="btn btn-ghost btn-lg">
+          {{ 'sections.featured_collection.view_all' | t }}
+          {% render 'icon', name: 'arrow-right', size: 17 %}
+        </a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Fan Favourites" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best-selling comfort" },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Thoughtfully designed, endlessly loved — the essentials pets ask for by name."
+    },
+    { "type": "checkbox", "id": "show_view_all", "label": "Show 'View all' button", "default": false },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "shop" }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

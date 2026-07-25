@@ -1,0 +1,21 @@
+<section class="section" style="text-align: center;">
+  <div class="container-x">
+    <div class="logo__mark" style="width: 72px; height: 72px; margin: 0 auto 24px;">
+      {% render 'icon', name: 'paw-print', size: 34 %}
+    </div>
+    <h1 class="h2-lg">{{ 'general.404.title' | t }}</h1>
+    <p class="muted" style="margin: 12px auto 28px; max-width: 480px;">
+      {{ 'general.404.subtext' | t }}
+    </p>
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-lg">
+      {{ 'general.404.link' | t }}
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "404",
+  "settings": []
+}
+{% endschema %}

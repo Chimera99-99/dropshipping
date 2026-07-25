@@ -1,0 +1,213 @@
+{
+  "general": {
+    "home": "Home",
+    "menu": "Menu",
+    "primary_nav": "Primary navigation",
+    "mobile_nav": "Mobile navigation",
+    "breadcrumb": "Breadcrumb",
+    "currency": "Country and currency",
+    "save": "Save",
+    "pagination": "Pagination",
+    "previous": "Previous page",
+    "next": "Next page",
+    "rights_reserved": "All rights reserved.",
+    "meta": {
+      "tags": "Tagged \"{{ tags }}\"",
+      "page": "Page {{ page }}"
+    },
+    "search": {
+      "title": "Search",
+      "placeholder": "Search for cooling mats, beds, bundles…",
+      "submit": "Search",
+      "results_count": {
+        "one": "{{ count }} result for \"{{ terms }}\"",
+        "other": "{{ count }} results for \"{{ terms }}\""
+      },
+      "no_results": "No results for \"{{ terms }}\". Try a different search."
+    },
+    "404": {
+      "title": "This page has wandered off",
+      "subtext": "The page you're looking for doesn't exist — but there's plenty of cool comfort waiting in the shop.",
+      "link": "Shop the collection"
+    },
+    "password_page": {
+      "title": "Opening soon",
+      "subtext": "Something cool is coming. Leave your email and we'll let you know the moment we open.",
+      "login_form_heading": "Enter store using password",
+      "login_form_password_label": "Password",
+      "login_form_submit": "Enter",
+      "login_password_button": "Enter using password",
+      "admin_link_html": "Are you the store owner? <a href=\"/admin\">Log in here</a>",
+      "powered_by_shopify_html": "This shop will be powered by {{ shopify }}"
+    }
+  },
+
+  "accessibility": {
+    "skip_to_content": "Skip to content"
+  },
+
+  "onboarding": {
+    "product_title": "Example product"
+  },
+
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "adding": "Adding…",
+      "choose_options": "Choose options",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "new": "New",
+      "save": "Save",
+      "save_percent": "Save {{ percent }}%",
+      "from_price": "From {{ price }}",
+      "quantity": "Quantity",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
+      "view_image": "View image {{ index }}",
+      "rating_label": "{{ rating }} out of 5 stars"
+    }
+  },
+
+  "collections": {
+    "general": {
+      "product_count": {
+        "one": "{{ count }} product",
+        "other": "{{ count }} products"
+      },
+      "no_products": "There's nothing here just yet.",
+      "browse_all": "Browse all products"
+    },
+    "sorting": {
+      "title": "Sort by"
+    },
+    "list": {
+      "title": "Collections"
+    }
+  },
+
+  "sections": {
+    "cart": {
+      "title": "Your cart",
+      "empty": "Your cart is empty.",
+      "continue_shopping": "Continue shopping",
+      "remove": "Remove",
+      "subtotal": "Subtotal",
+      "total": "Total",
+      "note": "Order note",
+      "checkout": "Secure checkout",
+      "taxes_note": "Taxes and shipping calculated at checkout."
+    },
+    "featured_collection": {
+      "view_all": "View all"
+    },
+    "shop_by_category": {
+      "shop_now": "Shop now"
+    },
+    "testimonials": {
+      "verified": "Verified Buyer"
+    },
+    "newsletter": {
+      "email": "Email address",
+      "placeholder": "Enter your email…",
+      "success": "Welcome to the Squad! 🐾"
+    }
+  },
+
+  "blogs": {
+    "article": {
+      "by": "By {{ author }}",
+      "comments": {
+        "one": "{{ count }} comment",
+        "other": "{{ count }} comments"
+      },
+      "comment_success": "Thanks — your comment has been posted.",
+      "name": "Name",
+      "email": "Email",
+      "message": "Comment",
+      "post": "Post comment"
+    }
+  },
+
+  "customer": {
+    "account": {
+      "title": "My account",
+      "default_address": "Default address",
+      "view_addresses": "View addresses",
+      "log_out": "Log out"
+    },
+    "login": {
+      "title": "Log in",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "forgot": "Forgot your password?",
+      "create": "Create an account"
+    },
+    "recover_password": {
+      "title": "Reset your password",
+      "submit": "Send reset link",
+      "success": "We've sent you an email with a link to reset your password."
+    },
+    "register": {
+      "title": "Create account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "submit": "Create account",
+      "have_account": "Already have an account? Log in"
+    },
+    "reset_password": {
+      "title": "Choose a new password",
+      "password": "New password",
+      "confirm": "Confirm password",
+      "submit": "Save password"
+    },
+    "activate_account": {
+      "title": "Activate your account",
+      "subtext": "Create a password to activate your account.",
+      "submit": "Activate account",
+      "decline": "Decline invitation"
+    },
+    "orders": {
+      "title": "Order history",
+      "order_number": "Order",
+      "date": "Date",
+      "payment_status": "Payment",
+      "total": "Total",
+      "none": "You haven't placed any orders yet."
+    },
+    "order": {
+      "title": "Order {{ name }}",
+      "product": "Product",
+      "price": "Price",
+      "quantity": "Quantity",
+      "total": "Total",
+      "billing_address": "Billing address",
+      "shipping_address": "Shipping address",
+      "back": "Back to account"
+    },
+    "addresses": {
+      "title": "Your addresses",
+      "default": "Default",
+      "add_new": "Add a new address",
+      "address1": "Address",
+      "city": "City",
+      "zip": "Postal code",
+      "country": "Country",
+      "save": "Save address",
+      "delete": "Delete",
+      "confirm": "Are you sure you want to delete this address?"
+    }
+  },
+
+  "gift_cards": {
+    "issued": {
+      "title": "Here's your {{ value }} gift card for {{ shop }}",
+      "subtext": "Your gift card",
+      "expires": "Expires on {{ expiry }}",
+      "redeem": "Use this code at checkout to redeem your gift card",
+      "shop_link": "Start shopping",
+      "print": "Print this gift card"
+    }
+  }
+}

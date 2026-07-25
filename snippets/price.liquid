@@ -1,0 +1,35 @@
+{%- comment -%}
+  Price block with compare-at and a computed discount pill.
+  Usage: {% render 'price', product: product %} or {% render 'price', variant: variant %}
+{%- endcomment -%}
+
+{%- liquid
+  if variant
+    assign price = variant.price
+    assign compare = variant.compare_at_price
+  else
+    assign price = product.price
+    assign compare = product.compare_at_price
+  endif
+
+  assign on_sale = false
+  if compare and compare > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="card__price">
+  <span class="price">
+    {%- if product.price_varies and variant == nil -%}
+      {{ 'products.product.from_price' | t: price: price | money }}
+    {%- else -%}
+      {{ price | money }}
+    {%- endif -%}
+  </span>
+
+  {%- if on_sale -%}
+    <span class="price--was">{{ compare | money }}</span>
+    {%- assign pct = compare | minus: price | times: 100 | divided_by: compare -%}
+    <span class="price--save">-{{ pct }}%</span>
+  {%- endif -%}
+</div>

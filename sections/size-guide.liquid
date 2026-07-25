@@ -1,0 +1,99 @@
+{%- comment -%}
+  Size guide table. Rows are blocks so a merchant can edit them without code.
+{%- endcomment -%}
+
+<section class="section section-sage" id="{{ section.settings.anchor | default: 'size-guide' }}">
+  <div class="container-x">
+    <div class="section-head reveal">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}
+        <p class="muted">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="reveal">
+      <div class="table-wrap">
+        <table class="size-table">
+          <thead>
+            <tr>
+              <th>{{ section.settings.col1 }}</th>
+              <th>{{ section.settings.col2 }}</th>
+              <th>{{ section.settings.col3 }}</th>
+              <th>{{ section.settings.col4 }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {%- for block in section.blocks -%}
+              <tr {{ block.shopify_attributes }}>
+                <td>{{ block.settings.size }}</td>
+                <td>{{ block.settings.dims }}</td>
+                <td class="muted-cell">{{ block.settings.best }}</td>
+                <td>{{ block.settings.upto }}</td>
+              </tr>
+            {%- endfor -%}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    {%- if section.settings.image != blank -%}
+      <div class="reveal media-frame" style="margin-top: 32px;">
+        <img
+          src="{{ section.settings.image | image_url: width: 1400 }}"
+          alt="{{ section.settings.image.alt | escape }}"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          loading="lazy"
+        >
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Size guide",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Get the fit right" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Size guide" },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Sized by your pet's weight — when in doubt, size up for extra lounging room."
+    },
+    { "type": "text", "id": "col1", "label": "Column 1", "default": "Size" },
+    { "type": "text", "id": "col2", "label": "Column 2", "default": "Dimensions" },
+    { "type": "text", "id": "col3", "label": "Column 3", "default": "Best for" },
+    { "type": "text", "id": "col4", "label": "Column 4", "default": "Up to" },
+    { "type": "image_picker", "id": "image", "label": "Size chart image" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "size-guide" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        { "type": "text", "id": "size", "label": "Size", "default": "M" },
+        { "type": "text", "id": "dims", "label": "Dimensions", "default": "60 × 50 cm" },
+        { "type": "text", "id": "best", "label": "Best for", "default": "Cats & small dogs" },
+        { "type": "text", "id": "upto", "label": "Up to", "default": "6 kg" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Size guide" }],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "row", "settings": { "size": "S", "dims": "50 × 40 cm", "best": "Kittens & toy breeds", "upto": "2.5 kg" } },
+      { "type": "row", "settings": { "size": "M", "dims": "60 × 50 cm", "best": "Cats & small dogs", "upto": "6 kg" } },
+      { "type": "row", "settings": { "size": "L", "dims": "70 × 55 cm", "best": "Medium dogs", "upto": "15 kg" } },
+      { "type": "row", "settings": { "size": "XL", "dims": "100 × 70 cm", "best": "Large dogs & sofas", "upto": "40 kg" } },
+      { "type": "row", "settings": { "size": "2XL", "dims": "150 × 100 cm", "best": "Giant breeds & multi-pet", "upto": "90 kg" } }
+    ]
+  }
+}
+{% endschema %}

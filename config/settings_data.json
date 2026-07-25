@@ -1,0 +1,72 @@
+{
+  "current": {
+    "type_header_font": "montserrat_n7",
+    "type_body_font": "montserrat_n4",
+    "color_accent": "#6E8A5C",
+    "color_cool": "#3E9FC9",
+    "show_vendor": false,
+    "show_rating": true,
+    "fallback_rating": 5,
+    "fallback_reviews": "12.4k",
+    "show_swatches": true,
+    "card_quick_add": true,
+    "social_instagram_link": "",
+    "social_tiktok_link": "",
+    "social_facebook_link": "",
+    "social_youtube_link": "",
+    "show_currency_selector": true,
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "blocks": {
+          "a1": {
+            "type": "message",
+            "settings": {
+              "icon": "paw-print",
+              "text": "Buy One, Get One FREE — Frischtier™ Cooling Mats"
+            }
+          },
+          "a2": {
+            "type": "message",
+            "settings": { "icon": "truck", "text": "Free EU Shipping Over €49" }
+          },
+          "a3": {
+            "type": "message",
+            "settings": {
+              "icon": "snowflake",
+              "text": "Stays Cool for Hours — No Water, No Gel"
+            }
+          },
+          "a4": {
+            "type": "message",
+            "settings": { "icon": "sparkles", "text": "60-Night Comfort Guarantee" }
+          }
+        },
+        "block_order": ["a1", "a2", "a3", "a4"],
+        "settings": {
+          "color_from": "#57724A",
+          "color_to": "#6E8A5C",
+          "color_text": "#FCFAF4"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": { "menu": "main-menu" }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "f1": { "type": "menu", "settings": { "title": "Discover", "menu": "footer" } },
+          "f2": { "type": "menu", "settings": { "title": "Support", "menu": "footer" } },
+          "f3": { "type": "menu", "settings": { "title": "Shop", "menu": "main-menu" } }
+        },
+        "block_order": ["f1", "f2", "f3"],
+        "settings": {
+          "blurb": "Thoughtfully designed pet essentials that keep your best friend cool, calm and comfy — every season, every room.",
+          "show_payment_icons": true,
+          "legal_menu": "footer"
+        }
+      }
+    }
+  }
+}

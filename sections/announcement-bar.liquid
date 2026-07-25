@@ -1,0 +1,66 @@
+{%- comment -%}
+  Scrolling announcement marquee. theme.js clones the items until the track is
+  twice the viewport width so the -50% CSS translate loops seamlessly.
+{%- endcomment -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="announcement" style="background: linear-gradient(to right, {{ section.settings.color_from }}, {{ section.settings.color_to }}); color: {{ section.settings.color_text }};">
+    <div class="marquee__track" data-marquee>
+      {%- for block in section.blocks -%}
+        <span class="marquee__item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != 'none' -%}
+            {% render 'icon', name: block.settings.icon, size: 15 %}
+          {%- endif -%}
+          {{ block.settings.text }}
+        </span>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "class": "announcement-section",
+  "settings": [
+    { "type": "color", "id": "color_from", "label": "Gradient start", "default": "#57724A" },
+    { "type": "color", "id": "color_to", "label": "Gradient end", "default": "#6E8A5C" },
+    { "type": "color", "id": "color_text", "label": "Text", "default": "#FCFAF4" }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Free EU Shipping Over €49" },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "paw-print",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "paw-print", "label": "Paw" },
+            { "value": "snowflake", "label": "Snowflake" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "sparkles", "label": "Sparkles" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "badge-check", "label": "Verified" }
+          ]
+        }
+      ]
+    }
+  ],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "message", "settings": { "icon": "paw-print", "text": "Buy One, Get One FREE — Frischtier™ Cooling Mats" } },
+      { "type": "message", "settings": { "icon": "truck", "text": "Free EU Shipping Over €49" } },
+      { "type": "message", "settings": { "icon": "snowflake", "text": "Stays Cool for Hours — No Water, No Gel" } },
+      { "type": "message", "settings": { "icon": "sparkles", "text": "60-Night Comfort Guarantee" } }
+    ]
+  }
+}
+{% endschema %}

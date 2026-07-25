@@ -1,0 +1,32 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ 'customer.activate_account.title' | t }}</h1>
+    <p class="muted">{{ 'customer.activate_account.subtext' | t }}</p>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x" style="max-width: 460px;">
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}
+        <div class="form-note form-note--error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="form-field">
+        <label for="activate-password">{{ 'customer.reset_password.password' | t }}</label>
+        <input id="activate-password" type="password" name="customer[password]" autocomplete="new-password" required>
+      </div>
+      <div class="form-field">
+        <label for="activate-confirm">{{ 'customer.reset_password.confirm' | t }}</label>
+        <input id="activate-confirm" type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">
+        {{ 'customer.activate_account.submit' | t }}
+      </button>
+      <button type="submit" name="decline" class="btn btn-ghost btn-full" style="margin-top: 10px;">
+        {{ 'customer.activate_account.decline' | t }}
+      </button>
+    {%- endform -%}
+  </div>
+</section>

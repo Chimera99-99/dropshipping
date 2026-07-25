@@ -1,0 +1,60 @@
+{%- comment -%}
+  Promo banner with a sliding ribbon across the top and watermark paw prints.
+{%- endcomment -%}
+
+<section class="section-sm">
+  <div class="container-x">
+    <div
+      class="bogo reveal"
+      style="background: linear-gradient(135deg, {{ section.settings.color_from }}, {{ section.settings.color_to }});"
+    >
+      {%- if section.settings.ribbon != blank -%}
+        <div class="bogo__ribbon">
+          <div class="marquee__track" data-marquee>
+            <span style="padding-inline: 8px">{{ section.settings.ribbon }}</span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      <div class="bogo__body">
+        <span class="bogo__paw bogo__paw--1">
+          {% render 'icon', name: 'paw-print', size: 110 %}
+        </span>
+        <span class="bogo__paw bogo__paw--2">
+          {% render 'icon', name: 'paw-print', size: 130 %}
+        </span>
+
+        <h2 class="bogo__title">{{ section.settings.heading }}</h2>
+        <p class="bogo__text">{{ section.settings.text }}</p>
+
+        {%- if section.settings.cta_text != blank -%}
+          <a href="{{ section.settings.cta_link }}" class="btn btn-lg btn-white">
+            {{ section.settings.cta_text }}
+            {% render 'icon', name: 'arrow-right', size: 18 %}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Promo banner",
+  "settings": [
+    { "type": "color", "id": "color_from", "label": "Gradient start", "default": "#3E9FC9" },
+    { "type": "color", "id": "color_to", "label": "Gradient end", "default": "#2C82A8" },
+    { "type": "text", "id": "ribbon", "label": "Ribbon text", "default": "BUY ONE · GET ONE FREE · " },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Buy One, Get One Free 🐾" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Every Frischtier™ Cooling Mat comes with a second one on us — perfect for a second pet, room, or the car."
+    },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Claim the Deal" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Promo banner" }]
+}
+{% endschema %}

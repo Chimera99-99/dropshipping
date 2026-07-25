@@ -1,0 +1,36 @@
+{%- comment -%}
+  Star rating. Reads the standard `reviews.rating` metafield written by the
+  Shopify Product Reviews app (and most third-party review apps). Falls back to
+  the theme setting so the design still reads correctly on a fresh store.
+  Usage: {% render 'rating', product: product, size: 14 %}
+{%- endcomment -%}
+
+{%- liquid
+  assign star_size = size | default: 14
+  assign value = settings.fallback_rating
+  assign count = settings.fallback_reviews
+
+  if product.metafields.reviews.rating.value != blank
+    assign value = product.metafields.reviews.rating.value.rating | round
+    assign count = product.metafields.reviews.rating_count
+  endif
+-%}
+
+<div class="stars">
+  <div
+    class="stars__row"
+    role="img"
+    aria-label="{{ 'products.product.rating_label' | t: rating: value }}"
+  >
+    {%- for i in (1..5) -%}
+      {%- if i <= value -%}
+        {% render 'icon', name: 'star', size: star_size, fill: 'currentColor' %}
+      {%- else -%}
+        {% render 'icon', name: 'star', size: star_size, class: 'is-empty' %}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  {%- if count != blank and count != 0 -%}
+    <span class="stars__count">({{ count }})</span>
+  {%- endif -%}
+</div>

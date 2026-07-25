@@ -1,0 +1,48 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ 'customer.login.title' | t }}</h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x" style="max-width: 460px;">
+    {%- form 'customer_login' -%}
+      {%- if form.errors -%}
+        <div class="form-note form-note--error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="form-field">
+        <label for="login-email">{{ 'customer.login.email' | t }}</label>
+        <input id="login-email" type="email" name="customer[email]" autocomplete="email" required>
+      </div>
+
+      <div class="form-field">
+        <label for="login-password">{{ 'customer.login.password' | t }}</label>
+        <input id="login-password" type="password" name="customer[password]" autocomplete="current-password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">{{ 'customer.login.submit' | t }}</button>
+
+      <p class="muted" style="margin-top: 16px; text-align: center; font-size: 0.9rem;">
+        <a href="{{ routes.account_recover_url }}">{{ 'customer.login.forgot' | t }}</a>
+        {%- if shop.customer_accounts_optional -%}
+          &middot; <a href="{{ routes.account_register_url }}">{{ 'customer.login.create' | t }}</a>
+        {%- endif -%}
+      </p>
+    {%- endform -%}
+
+    <div style="margin-top: 40px; border-top: 1px solid var(--cream-200); padding-top: 32px;">
+      <h2 class="h2" style="font-size: 1.2rem; margin-bottom: 12px;">{{ 'customer.recover_password.title' | t }}</h2>
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <div class="form-note">{{ 'customer.recover_password.success' | t }}</div>
+        {%- endif -%}
+        <div class="form-field">
+          <label for="recover-email">{{ 'customer.login.email' | t }}</label>
+          <input id="recover-email" type="email" name="email" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn-ghost btn-full">{{ 'customer.recover_password.submit' | t }}</button>
+      {%- endform -%}
+    </div>
+  </div>
+</section>

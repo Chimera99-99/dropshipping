@@ -1,0 +1,96 @@
+{%- comment -%}
+  Horizontal scroller of round category tiles. Each block links to a collection;
+  the collection image is used when present, otherwise the chosen icon.
+{%- endcomment -%}
+
+<section class="section-sm">
+  <div class="container-x">
+    <div class="cat-tiles no-scrollbar">
+      {%- for block in section.blocks -%}
+        {%- liquid
+          assign target = block.settings.collection
+          assign label = block.settings.label
+          if label == blank and target != blank
+            assign label = target.title
+          endif
+          assign img = block.settings.image
+          if img == blank and target.featured_image != blank
+            assign img = target.featured_image
+          endif
+        -%}
+        <div
+          class="cat-tile reveal"
+          style="--reveal-delay: {{ forloop.index0 | times: 50 }}ms"
+          {{ block.shopify_attributes }}
+        >
+          <a href="{% if target != blank %}{{ target.url }}{% else %}{{ block.settings.link | default: routes.all_products_collection_url }}{% endif %}">
+            <div class="cat-tile__media">
+              {%- if img != blank -%}
+                <img
+                  src="{{ img | image_url: width: 240 }}"
+                  alt="{{ label | escape }}"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                >
+              {%- else -%}
+                {% render 'icon', name: block.settings.icon, size: 40, stroke_width: 1.6 %}
+              {%- endif -%}
+            </div>
+            <span class="cat-tile__label">{{ label }}</span>
+          </a>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category tiles",
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "label", "label": "Label", "info": "Defaults to the collection title." },
+        { "type": "url", "id": "link", "label": "Link", "info": "Used when no collection is chosen." },
+        { "type": "image_picker", "id": "image", "label": "Image", "info": "Defaults to the collection image. With no image the icon shows instead." },
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "snowflake",
+          "options": [
+            { "value": "snowflake", "label": "Snowflake" },
+            { "value": "bed-double", "label": "Bed" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "car", "label": "Car" },
+            { "value": "cat", "label": "Cat" },
+            { "value": "dog", "label": "Dog" },
+            { "value": "flame", "label": "Flame" },
+            { "value": "sparkles", "label": "Sparkles" },
+            { "value": "paw-print", "label": "Paw" },
+            { "value": "sofa", "label": "Sofa" }
+          ]
+        }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Category tiles" }],
+  "default": {
+    "settings": {},
+    "blocks": [
+      { "type": "tile", "settings": { "label": "Cooling Mats", "icon": "snowflake" } },
+      { "type": "tile", "settings": { "label": "Pet Beds", "icon": "bed-double" } },
+      { "type": "tile", "settings": { "label": "Bundles", "icon": "gift" } },
+      { "type": "tile", "settings": { "label": "Travel", "icon": "car" } },
+      { "type": "tile", "settings": { "label": "For Cats", "icon": "cat" } },
+      { "type": "tile", "settings": { "label": "For Dogs", "icon": "dog" } },
+      { "type": "tile", "settings": { "label": "Best Sellers", "icon": "flame" } },
+      { "type": "tile", "settings": { "label": "New In", "icon": "sparkles" } }
+    ]
+  }
+}
+{% endschema %}

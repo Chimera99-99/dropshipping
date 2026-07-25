@@ -1,0 +1,38 @@
+<div class="page-head">
+  <div class="container-x">
+    <h1>{{ 'customer.register.title' | t }}</h1>
+  </div>
+</div>
+
+<section class="section">
+  <div class="container-x" style="max-width: 460px;">
+    {%- form 'create_customer' -%}
+      {%- if form.errors -%}
+        <div class="form-note form-note--error">{{ form.errors | default_errors }}</div>
+      {%- endif -%}
+
+      <div class="form-field">
+        <label for="reg-first">{{ 'customer.register.first_name' | t }}</label>
+        <input id="reg-first" type="text" name="customer[first_name]" autocomplete="given-name">
+      </div>
+      <div class="form-field">
+        <label for="reg-last">{{ 'customer.register.last_name' | t }}</label>
+        <input id="reg-last" type="text" name="customer[last_name]" autocomplete="family-name">
+      </div>
+      <div class="form-field">
+        <label for="reg-email">{{ 'customer.login.email' | t }}</label>
+        <input id="reg-email" type="email" name="customer[email]" autocomplete="email" required>
+      </div>
+      <div class="form-field">
+        <label for="reg-password">{{ 'customer.login.password' | t }}</label>
+        <input id="reg-password" type="password" name="customer[password]" autocomplete="new-password" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-full">{{ 'customer.register.submit' | t }}</button>
+
+      <p class="muted" style="margin-top: 16px; text-align: center; font-size: 0.9rem;">
+        <a href="{{ routes.account_login_url }}">{{ 'customer.register.have_account' | t }}</a>
+      </p>
+    {%- endform -%}
+  </div>
+</section>

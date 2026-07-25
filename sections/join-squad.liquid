@@ -1,0 +1,105 @@
+{%- comment -%}
+  Newsletter signup + social links. Uses Shopify's customer form so signups land
+  in the store's customer list with the "newsletter" tag.
+{%- endcomment -%}
+
+<section class="section-sm">
+  <div class="container-x">
+    <div class="squad reveal">
+      <div class="squad__grid">
+        <div>
+          <h2>{{ section.settings.heading }}</h2>
+          <p class="squad__text">{{ section.settings.text }}</p>
+
+          {%- form 'customer' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <div class="squad__form" data-newsletter>
+              <label class="visually-hidden" for="squad-email">
+                {{ 'sections.newsletter.email' | t }}
+              </label>
+              <input
+                id="squad-email"
+                type="email"
+                name="contact[email]"
+                required
+                autocomplete="email"
+                placeholder="{{ 'sections.newsletter.placeholder' | t }}"
+                value="{{ form.email }}"
+              >
+              <button type="submit" class="btn btn-cool">
+                {% render 'icon', name: 'send', size: 17 %}
+                {{ section.settings.button | default: 'Join' }}
+              </button>
+            </div>
+
+            <small class="squad__note" data-newsletter-note>
+              {%- if form.posted_successfully? -%}
+                {{ 'sections.newsletter.success' | t }}
+              {%- elsif form.errors -%}
+                {{ form.errors.messages['email'] }}
+              {%- else -%}
+                {{ section.settings.note }}
+              {%- endif -%}
+            </small>
+          {%- endform -%}
+        </div>
+
+        <div>
+          <span class="squad__socials-label">{{ section.settings.socials_label }}</span>
+          <div class="squad__socials">
+            {%- if settings.social_instagram_link != blank -%}
+              <a href="{{ settings.social_instagram_link }}" class="squad__social" rel="noopener" target="_blank">
+                {% render 'icon', name: 'instagram', size: 22 %} Instagram
+              </a>
+            {%- endif -%}
+            {%- if settings.social_tiktok_link != blank -%}
+              <a href="{{ settings.social_tiktok_link }}" class="squad__social" rel="noopener" target="_blank">
+                {% render 'icon', name: 'music-2', size: 22 %} TikTok
+              </a>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <a href="{{ settings.social_facebook_link }}" class="squad__social" rel="noopener" target="_blank">
+                {% render 'icon', name: 'facebook', size: 22 %} Facebook
+              </a>
+            {%- endif -%}
+            {%- if settings.social_youtube_link != blank -%}
+              <a href="{{ settings.social_youtube_link }}" class="squad__social" rel="noopener" target="_blank">
+                {% render 'icon', name: 'youtube', size: 22 %} YouTube
+              </a>
+            {%- endif -%}
+
+            {%- if settings.social_instagram_link == blank
+              and settings.social_tiktok_link == blank
+              and settings.social_facebook_link == blank
+              and settings.social_youtube_link == blank
+            -%}
+              <span class="squad__social">{% render 'icon', name: 'instagram', size: 22 %} Instagram</span>
+              <span class="squad__social">{% render 'icon', name: 'music-2', size: 22 %} TikTok</span>
+              <span class="squad__social">{% render 'icon', name: 'facebook', size: 22 %} Facebook</span>
+              <span class="squad__social">{% render 'icon', name: 'youtube', size: 22 %} YouTube</span>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join the Frischtier™ Squad" },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Text",
+      "default": "Get 10% off your first order, early access to drops, and a weekly dose of very good boys & girls."
+    },
+    { "type": "text", "id": "button", "label": "Button", "default": "Join" },
+    { "type": "text", "id": "note", "label": "Small print", "default": "No spam, just cosy things. Unsubscribe anytime." },
+    { "type": "text", "id": "socials_label", "label": "Socials heading", "default": "Follow the pack" }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

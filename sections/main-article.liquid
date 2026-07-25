@@ -1,0 +1,74 @@
+<article class="section">
+  <div class="container-x" style="max-width: 780px;">
+    <div class="reveal" style="text-align: center; margin-bottom: 32px;">
+      <span class="eyebrow">{{ article.published_at | date: format: 'date' }}</span>
+      <h1 class="h2-lg" style="margin-top: 10px;">{{ article.title }}</h1>
+      {%- if article.author != blank -%}
+        <p class="muted" style="margin-top: 8px;">{{ 'blogs.article.by' | t: author: article.author }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if article.image -%}
+      <div class="media-frame reveal" style="margin-bottom: 32px;">
+        <img
+          src="{{ article.image | image_url: width: 1400 }}"
+          alt="{{ article.image.alt | escape }}"
+          width="{{ article.image.width }}"
+          height="{{ article.image.height }}"
+        >
+      </div>
+    {%- endif -%}
+
+    <div class="rte reveal">{{ article.content }}</div>
+
+    {%- if blog.comments_enabled? -%}
+      <div style="margin-top: 48px;">
+        <h2 class="h2" style="font-size: 1.4rem;">
+          {{ 'blogs.article.comments' | t: count: article.comments_count }}
+        </h2>
+
+        {%- for comment in article.comments -%}
+          <div class="review" style="margin-top: 16px;">
+            <p class="review__text">{{ comment.content }}</p>
+            <div class="review__author">
+              <span class="review__avatar">{{ comment.author | slice: 0 | upcase }}</span>
+              <div>
+                <b class="review__name">{{ comment.author }}</b>
+                <small class="stars__count">{{ comment.created_at | date: format: 'date' }}</small>
+              </div>
+            </div>
+          </div>
+        {%- endfor -%}
+
+        {%- form 'new_comment', article -%}
+          {%- if form.errors -%}
+            <div class="form-note form-note--error">{{ form.errors | default_errors }}</div>
+          {%- elsif form.posted_successfully? -%}
+            <div class="form-note">{{ 'blogs.article.comment_success' | t }}</div>
+          {%- endif -%}
+
+          <div class="form-field" style="margin-top: 24px;">
+            <label for="comment-author">{{ 'blogs.article.name' | t }}</label>
+            <input id="comment-author" type="text" name="comment[author]" required>
+          </div>
+          <div class="form-field">
+            <label for="comment-email">{{ 'blogs.article.email' | t }}</label>
+            <input id="comment-email" type="email" name="comment[email]" required>
+          </div>
+          <div class="form-field">
+            <label for="comment-body">{{ 'blogs.article.message' | t }}</label>
+            <textarea id="comment-body" name="comment[body]" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">{{ 'blogs.article.post' | t }}</button>
+        {%- endform -%}
+      </div>
+    {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

@@ -1,0 +1,130 @@
+{%- comment -%}
+  Product card — the workhorse of the collection, best-sellers and cross-sell
+  grids. Port of the original ProductCard.js.
+
+  Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+{%- liquid
+  assign on_sale = false
+  if product.compare_at_price > product.price
+    assign on_sale = true
+  endif
+
+  # Badge: an explicit `badge:*` tag wins, then sold out, then sale, then new.
+  assign badge = ''
+  assign badge_style = ''
+  for tag in product.tags
+    if tag contains 'badge:'
+      assign badge = tag | remove: 'badge:' | strip
+      assign badge_style = 'cool'
+    endif
+  endfor
+
+  if badge == blank
+    if product.available == false
+      assign badge = 'products.product.sold_out' | t
+    elsif on_sale
+      assign pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+      assign badge = 'products.product.save_percent' | t: percent: pct
+      assign badge_style = 'cool'
+    elsif product.tags contains 'new'
+      assign badge = 'products.product.new' | t
+    endif
+  endif
+-%}
+
+<div class="card">
+  <a
+    href="{{ product.url }}"
+    class="card__media"
+    aria-label="{{ product.title | escape }}"
+  >
+    {%- if badge != blank -%}
+      <span class="card__tag {% if badge_style == 'cool' %}card__tag--cool{% endif %}">
+        {{- badge -}}
+      </span>
+    {%- endif -%}
+
+    {%- if product.featured_media -%}
+      <img
+        src="{{ product.featured_media | image_url: width: 600 }}"
+        srcset="
+          {{ product.featured_media | image_url: width: 400 }} 400w,
+          {{ product.featured_media | image_url: width: 600 }} 600w,
+          {{ product.featured_media | image_url: width: 900 }} 900w
+        "
+        sizes="(min-width: 1024px) 280px, (min-width: 640px) 45vw, 90vw"
+        alt="{{ product.featured_media.alt | escape }}"
+        width="600"
+        height="600"
+        loading="lazy"
+      >
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <div class="card__body">
+    {%- if settings.show_rating -%}
+      {% render 'rating', product: product, size: 14 %}
+    {%- endif -%}
+
+    {%- if settings.show_vendor and product.vendor != blank -%}
+      <span class="stars__count">{{ product.vendor }}</span>
+    {%- endif -%}
+
+    <h3 class="card__title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    {%- if settings.show_swatches -%}
+      {%- for option in product.options_with_values -%}
+        {%- assign name = option.name | downcase -%}
+        {%- if name contains 'color' or name contains 'colour' -%}
+          <div class="card__swatches">
+            {%- for value in option.values limit: 6 -%}
+              {%- if value.swatch.color -%}
+                <span class="swatch-dot" style="background: {{ value.swatch.color }};" title="{{ value | escape }}"></span>
+              {%- else -%}
+                <span
+                  class="swatch-dot"
+                  style="background: {{ value | downcase | replace: ' ', '' | split: ',' | first }};"
+                  title="{{ value | escape }}"
+                ></span>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+
+    {% render 'price', product: product %}
+  </div>
+
+  {%- if settings.card_quick_add -%}
+    {%- if product.available and product.variants.size == 1 -%}
+      {%- form 'product', product, id: null -%}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button
+          type="submit"
+          class="btn btn-primary"
+          data-add-to-cart
+          data-text-add="{{ 'products.product.add_to_cart' | t }}"
+          data-text-adding="{{ 'products.product.adding' | t }}"
+        >
+          {{ 'products.product.add_to_cart' | t }}
+        </button>
+      {%- endform -%}
+    {%- elsif product.available -%}
+      <a href="{{ product.url }}" class="btn btn-primary">
+        {{ 'products.product.choose_options' | t }}
+      </a>
+    {%- else -%}
+      <span class="btn btn-primary" aria-disabled="true">
+        {{ 'products.product.sold_out' | t }}
+      </span>
+    {%- endif -%}
+  {%- endif -%}
+</div>
