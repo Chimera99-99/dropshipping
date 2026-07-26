@@ -1,104 +1,24 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-product",
       "blocks": {
-        "r1": {
-          "type": "reassurance",
-          "settings": { "icon": "truck", "text": "Free EU shipping over €49 · dispatched in 24h" }
-        },
-        "r2": {
-          "type": "reassurance",
-          "settings": { "icon": "moon", "text": "60-night comfort guarantee — love it or return it" }
-        },
-        "r3": {
-          "type": "reassurance",
-          "settings": { "icon": "lock", "text": "Secure checkout · Klarna & PayPal available" }
-        }
+        "r1": { "type": "reassurance", "settings": { "icon": "truck", "text": "Free EU shipping over €10" } },
+        "r2": { "type": "reassurance", "settings": { "icon": "refresh-cw", "text": "30-day money-back guarantee" } },
+        "r3": { "type": "reassurance", "settings": { "icon": "lock", "text": "Secure checkout" } }
       },
       "block_order": ["r1", "r2", "r3"],
-      "settings": {
-        "add_label": "Add to Cart — BOGO Free 🐾",
-        "show_dynamic_checkout": true
-      }
-    },
-
-    "trust": {
-      "type": "trust-strip",
-      "blocks": {
-        "t1": { "type": "item", "settings": { "icon": "snowflake", "text": "Self-cooling ice-silk" } },
-        "t2": { "type": "item", "settings": { "icon": "droplets", "text": "No water or gel needed" } },
-        "t3": { "type": "item", "settings": { "icon": "washing-machine", "text": "Machine washable" } },
-        "t4": { "type": "item", "settings": { "icon": "sofa", "text": "Sofa · Floor · Crate · Car" } },
-        "t5": { "type": "item", "settings": { "icon": "palette", "text": "5 sizes · 6 colours" } }
-      },
-      "block_order": ["t1", "t2", "t3", "t4", "t5"],
-      "settings": { "bg": "#57724A", "fg": "#F8F3E9" }
-    },
-
-    "construction": {
-      "type": "image-with-features",
-      "blocks": {
-        "f1": {
-          "type": "feature",
-          "settings": { "icon": "snowflake", "title": "Surface:", "text": "cold-feeling ice-silk that reacts to touch" }
-        },
-        "f2": {
-          "type": "feature",
-          "settings": { "icon": "cloud", "title": "Middle:", "text": "soft padded cotton for gentle support" }
-        },
-        "f3": {
-          "type": "feature",
-          "settings": { "icon": "wind", "title": "Reverse:", "text": "breathable air-mesh that vents heat away" }
-        }
-      },
-      "block_order": ["f1", "f2", "f3"],
-      "settings": {
-        "fallback_image": "fabric-closeup.png",
-        "background": "none",
-        "eyebrow": "How it stays cool",
-        "heading": "Cool science, cosy result",
-        "text": "",
-        "footnote": "The result: a mat that feels instantly cool, never sweaty, and bounces back wash after wash.",
-        "cta_text": "",
-        "anchor": "construction"
-      }
-    },
-
-    "size-guide": {
-      "type": "size-guide",
-      "blocks": {
-        "z1": { "type": "row", "settings": { "size": "S", "dims": "50 × 40 cm", "best": "Kittens & toy breeds", "upto": "2.5 kg" } },
-        "z2": { "type": "row", "settings": { "size": "M", "dims": "60 × 50 cm", "best": "Cats & small dogs", "upto": "6 kg" } },
-        "z3": { "type": "row", "settings": { "size": "L", "dims": "70 × 55 cm", "best": "Medium dogs", "upto": "15 kg" } },
-        "z4": { "type": "row", "settings": { "size": "XL", "dims": "100 × 70 cm", "best": "Large dogs & sofas", "upto": "40 kg" } },
-        "z5": { "type": "row", "settings": { "size": "2XL", "dims": "150 × 100 cm", "best": "Giant breeds & multi-pet", "upto": "90 kg" } }
-      },
-      "block_order": ["z1", "z2", "z3", "z4", "z5"],
-      "settings": {
-        "eyebrow": "Get the fit right",
-        "heading": "Size guide",
-        "subheading": "Sized by your pet's weight — when in doubt, size up for extra lounging room.",
-        "col1": "Size",
-        "col2": "Dimensions",
-        "col3": "Best for",
-        "col4": "Up to",
-        "anchor": "size-guide"
-      }
-    },
-
-    "cross-sell": {
-      "type": "featured-collection",
-      "settings": {
-        "products_to_show": 4,
-        "eyebrow": "Complete the set",
-        "heading": "Pairs perfectly with",
-        "subheading": "",
-        "show_view_all": false,
-        "anchor": "cross-sell"
-      }
+      "settings": { "add_label": "Add to Cart", "show_dynamic_checkout": true }
     }
   },
-
-  "order": ["main", "trust", "construction", "size-guide", "cross-sell"]
+  "order": ["main"]
 }

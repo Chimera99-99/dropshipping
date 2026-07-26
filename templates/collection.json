@@ -1,60 +1,18 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-collection",
-      "settings": {
-        "eyebrow": "Summer Collection",
-        "per_page": 24,
-        "show_sort": true
-      }
-    },
-    "value-props": {
-      "type": "value-props",
-      "blocks": {
-        "v1": {
-          "type": "value",
-          "settings": {
-            "icon": "paw-print",
-            "title": "500k+ happy pets",
-            "text": "Chilling out in 30+ countries"
-          }
-        },
-        "v2": {
-          "type": "value",
-          "settings": {
-            "icon": "moon",
-            "title": "60-night guarantee",
-            "text": "Love it or your money back"
-          }
-        },
-        "v3": {
-          "type": "value",
-          "settings": {
-            "icon": "truck",
-            "title": "Free EU shipping",
-            "text": "On every order over €49"
-          }
-        },
-        "v4": {
-          "type": "value",
-          "settings": {
-            "icon": "snowflake",
-            "title": "1M+ mats sold",
-            "text": "The original ice-silk cool mat"
-          }
-        }
-      },
-      "block_order": [
-        "v1",
-        "v2",
-        "v3",
-        "v4"
-      ],
-      "settings": {}
+      "settings": { "eyebrow": "Cool Comfort, Delivered", "per_page": 24, "show_sort": true }
     }
   },
-  "order": [
-    "main",
-    "value-props"
-  ]
+  "order": ["main"]
 }
